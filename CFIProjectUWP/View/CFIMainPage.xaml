@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="CFIProjectUWP.CFIMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CFIProjectUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:CFIProjectUWP.DBServiceRef"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate  x:Key="HeaderTemplate">
+            <StackPanel>
+                <TextBlock x:Name="titleTextBlock" HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Query Result" VerticalAlignment="Top" FontSize="30"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock  Text="CRN" Margin="20,0,0,0" Width="100"/>
+                    <TextBlock  Text="SubjectCode" Margin="5,0,0,0" Width="150" />
+                    <TextBlock  Text="CompetencyName" Margin="5,0,0,0" Width="150" />
+                    <TextBlock  Text="StartDate" Margin="5,0,0,0" Width="150" />
+                    <TextBlock  Text="EndDate" Margin="5,0,0,0" Width="150" />
+                    <TextBlock  Text="DayOfWeek" Margin="5,0,0,0" Width="100" />
+                    <TextBlock  Text="Time" Margin="5,0,0,0" Width="100" />
+                    <TextBlock  Text="Room" Margin="5,0,0,0" Width="100" />
+                    <TextBlock  Text="Lecturer" Margin="5,0,0,0" Width="150" />
+                    <TextBlock  Text="Campus" Margin="5,0,0,0" Width="150" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:DataType="data:SubjectDetail" x:Key="CFIDetailTemplate">
+            <StackPanel Orientation="Horizontal" DoubleTapped="StackPanel_DoubleTapped" BorderThickness="1" BorderBrush="Black">
+                <TextBlock  Text="{x:Bind CRN}" Margin="5,0,0,0" Width="100"/>
+                <TextBlock  Text="{x:Bind SubjectCode}" Margin="5,0,0,0" Width="150" TextTrimming="WordEllipsis" />
+                <TextBlock  Text="{x:Bind CompetencyName}" Margin="5,0,0,0" Width="150" TextTrimming="WordEllipsis" ToolTipService.ToolTip="{x:Bind CompetencyName}"/>
+                <TextBlock  Text="{x:Bind StartDate}" Margin="5,0,0,0" Width="150" TextTrimming="WordEllipsis"/>
+                <TextBlock  Text="{x:Bind EndDate}" Margin="5,0,0,0" Width="150" TextTrimming="WordEllipsis"/>
+                <TextBlock  Text="{x:Bind DayOfWeek}" Margin="5,0,0,0" Width="100" TextTrimming="WordEllipsis"/>
+                <TextBlock  Text="{x:Bind Time}" Margin="5,0,0,0" Width="100" TextTrimming="WordEllipsis"/>
+                <TextBlock  Text="{x:Bind Room}" Margin="5,0,0,0" Width="100" TextTrimming="WordEllipsis"/>
+                <TextBlock  Text="{x:Bind Lecturer}" Margin="5,0,0,0" Width="150" TextTrimming="WordEllipsis" ToolTipService.ToolTip="{x:Bind Lecturer}"/>
+                <TextBlock  Text="{x:Bind Campus}" Margin="5,0,0,0" Width="150" TextTrimming="WordEllipsis" ToolTipService.ToolTip="{x:Bind Campus}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <SplitView x:Name="mySplitView" Margin="0" IsPaneOpen="false" OpenPaneLength="150" DisplayMode="CompactInline" CompactPaneLength="35">
+        <SplitView.Pane>
+            <StackPanel Background="#FF7F7F7F">
+                <Button x:Name="controlsButton" Content="&#xE700;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Left" Margin="0,15,0,0" Background="{x:Null}" Click="controlsButton_Click"/>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button Name="btnFiltering" Content="&#xE71C;" FontFamily="Segoe MDL2 Assets" Background="{x:Null}" Click="btnFiltering_Click"/>
+                        <TextBlock Name="filteringTextBlock" Text="Filtering"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button Name="btnSorting" Content="&#xE8CB;" FontFamily="Segoe MDL2 Assets" Background="{x:Null}" Click="btnSorting_Click"/>
+                        <TextBlock Name="sortingTextBlock" Text="Sorting"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button Name="btnReset" Content="&#xE72C;" FontFamily="Segoe MDL2 Assets" Background="{x:Null}" Click="btnReset_Click"/>
+                        <TextBlock Name="btnResetTextBlock" Text="Reset"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button Name="btnBack" Content="&#xE72B;" FontFamily="Segoe MDL2 Assets" Background="{x:Null}" Click="btnBack_Click"/>
+                        <TextBlock Name="btnBackTextBlock" Text="Back"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+        <ListView x:Name="myListView"  ScrollViewer.VerticalScrollMode="Enabled"  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                          HeaderTemplate ="{StaticResource HeaderTemplate}"  ItemTemplate="{StaticResource CFIDetailTemplate}" ItemsSource="{x:Bind mQueryList,Mode=OneWay}" Margin="0"/>
+    </SplitView>
+</Page>
