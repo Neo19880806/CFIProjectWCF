@@ -9,7 +9,9 @@ namespace CFIWCFServiceLiabrary.Model
 {
     public class DBHelper
     {
-        private static String connectionString = "database=work;Password=123456;User ID=root;server=127.0.0.1";
+        //private static String connectionString = "database=work;Password=123456;User ID=root;server=127.0.0.1";
+        private static String connectionString = "database = tafebuddy; Password=lgj123456;User ID = cfiproject; server=www.db4free.net;old guids = true";
+
 
         public static DBHelper DefaultInstance = new DBHelper();
         
@@ -23,7 +25,7 @@ namespace CFIWCFServiceLiabrary.Model
             var subjectList = new List<Subject>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             { 
-                string sqlValidSubject = "select DISTINCT `Course Title` from tblsiscrns_sr004_2016_s2 where Day_Of_Week!='0'";
+                string sqlValidSubject = "select DISTINCT `Course Title` from tblSISCRNs_SR004_2016_S2 where Day_Of_Week!='0'";
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(sqlValidSubject, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -42,9 +44,9 @@ namespace CFIWCFServiceLiabrary.Model
             var detailsList = new List<SubjectDetail>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                String sqlQueryString = String.Format("select CRN,tblsubjectcompetencies.ITSubject,`Course Title`,`Meeting Start Date`," +
-                "`Meeting Finish Date`,Day_Of_Week,Time,Room,Lecturer,Campus from tblsiscrns_sr004_2016_s2 " +
-                "left join tblsubjectcompetencies on tblsiscrns_sr004_2016_s2.`Course Code`=tblsubjectcompetencies.CourseNumber " +
+                String sqlQueryString = String.Format("select CRN,tblSubjectCompetencies.ITSubject,`Course Title`,`Meeting Start Date`," +
+                "`Meeting Finish Date`,Day_Of_Week,Time,Room,Lecturer,Campus from tblSISCRNs_SR004_2016_S2 " +
+                "left join tblSubjectCompetencies on tblSISCRNs_SR004_2016_S2.`Course Code`=tblSubjectCompetencies.CourseNumber " +
                 "where `Course Title` = \"{0}\" and Day_Of_Week!='0'",
                 subject.Name);
                 conn.Open();
