@@ -5,7 +5,7 @@
     xmlns:local="using:CFIProjectUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:CFIProjectUWP.DBServiceRef"
+    xmlns:data="using:CFIProjectUWP.Model"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate  x:Key="HeaderTemplate">
@@ -25,7 +25,8 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
-        <DataTemplate x:DataType="data:SubjectDetail" x:Key="CFIDetailTemplate">
+        <DataTemplate x:DataType="data:SubjectDetail"
+                      x:Key="CFIDetailTemplate">
             <StackPanel Orientation="Horizontal" DoubleTapped="StackPanel_DoubleTapped" BorderThickness="1" BorderBrush="Black">
                 <TextBlock  Text="{x:Bind CRN}" Margin="5,0,0,0" Width="100"/>
                 <TextBlock  Text="{x:Bind SubjectCode}" Margin="5,0,0,0" Width="150" TextTrimming="WordEllipsis" />

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 
 namespace CFIWCFServiceLiabrary
@@ -13,8 +14,15 @@ namespace CFIWCFServiceLiabrary
     public interface ICFIDBService
     {
         [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "/")]
         List<Subject> GetValidSubject();
+
         [OperationContract]
-        List<SubjectDetail> GetSubjectDetails(Subject subject);
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "/Details/{subjectJson}")]
+        List<SubjectDetail> GetSubjectDetails(string subjectJson);
     }
 }

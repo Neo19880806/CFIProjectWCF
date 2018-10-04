@@ -91,32 +91,13 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
-    <None Include="Service References\DBServiceRef\CFIDBService.wsdl" />
-    <None Include="Service References\DBServiceRef\CFIProjectUWP.DBServiceRef.GetSubjectDetailsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DBServiceRef\CFIProjectUWP.DBServiceRef.GetValidSubjectResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DBServiceRef\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DBServiceRef\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DBServiceRef\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Service References\DBServiceRef\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Subject.cs" />
+    <Compile Include="Model\SubjectDetail.cs" />
     <Compile Include="View\CFIDetailDialog.xaml.cs">
       <DependentUpon>CFIDetailDialog.xaml</DependentUpon>
     </Compile>
@@ -148,13 +129,6 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <None Include="Service References\DBServiceRef\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\DBServiceRef\configuration.svcinfo" />
-    <None Include="Service References\DBServiceRef\configuration91.svcinfo" />
-    <None Include="Service References\DBServiceRef\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -182,20 +156,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="MySql.Data.RT">
-      <HintPath>D:\Program Files (x86)\MySQL\mysql-connector-net-6.9.7-noinstall\RT\MySql.Data.RT.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\DBServiceRef\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
