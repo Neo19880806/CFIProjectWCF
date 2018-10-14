@@ -22,7 +22,7 @@ namespace CFIWCFServiceLiabrary
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "/Details/{subjectJson}")]
+            UriTemplate = "/Details?SubjectName={subjectJson}")]
         List<SubjectDetail> GetSubjectDetails(string subjectJson);
     }
 }

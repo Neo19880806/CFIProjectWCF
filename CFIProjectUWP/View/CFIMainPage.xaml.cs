@@ -45,8 +45,8 @@ namespace CFIProjectUWP
                 Subject subject = new Subject { Name = selectedSubject };
                 JObject requestJsonObject = JObject.FromObject(subject);
 
-
-                string url = "http://localhost:1988/MywebHttpBinding/Details/";
+                //WCF Restful Http Local Url
+                string url = "http://localhost:1988/MywebHttpBinding/Details?SubjectName=";
                 string jsonString = requestJsonObject.ToString();
                 String uriString = String.Format("{0}{1}", url, jsonString);
                 Uri uri = new Uri(uriString);

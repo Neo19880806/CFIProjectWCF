@@ -19,9 +19,6 @@ namespace CFIWCFServiceLiabrary
 
         public List<Subject> GetValidSubject()
         {
-            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-            Subject subject = new Subject { Name = "ICTPRG402-Apply query language (4DBB)" };
-            string stringJson = jsSerializer.Serialize(subject);
             return DBHelper.DefaultInstance.GetValidSubject();
         }
     }

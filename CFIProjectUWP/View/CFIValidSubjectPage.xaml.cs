@@ -28,8 +28,9 @@ namespace CFIProjectUWP
         {
             try
             {
+                //WCF Restful Http Local Url
                 HttpRequestMessage httpRequest = new HttpRequestMessage(
-    HttpMethod.Get, new Uri("http://localhost:1988/MywebHttpBinding/"));
+                HttpMethod.Get, new Uri("http://localhost:1988/MywebHttpBinding/"));
 
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage httpResponse = await httpClient.SendRequestAsync(httpRequest);
