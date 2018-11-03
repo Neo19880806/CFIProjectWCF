@@ -9,12 +9,28 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <TextBlock x:Name="txtTitile" TextWrapping="Wrap" Text="Class Finder MainPage" VerticalAlignment="Center" Margin="10,0" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="txtValidSubject" Text="Valid Subject for Current Semester:" HorizontalAlignment="Center"></TextBlock>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <ComboBox x:Name="cmbValidSubject" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" MinWidth="200" Width="213" SelectedIndex="-1"/>
-            <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="btnSearch_Click"/>
+            <TextBlock x:Name="txtBlockTitile" TextWrapping="Wrap" Text="Class Finder MainPage" VerticalAlignment="Center" Margin="10,0" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="txtBlockValidSubject" Text="Valid Subject for Current Semester:" HorizontalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
+                <ComboBox x:Name="cmbValidSubject" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" MinWidth="400" Width="400" SelectedIndex="-1"/>
+                <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="btnSearch_Click"/>
+            </StackPanel>
         </StackPanel>
-        </StackPanel>
+        <Grid HorizontalAlignment="Center" Height="490" Margin="0" VerticalAlignment="Center" Width="800">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto" MinWidth="105"/>
+            </Grid.ColumnDefinitions>
+            <RadioButton x:Name="radioStaff" Content="Staff" GroupName="Person" IsChecked="True" />
+            <TextBox x:Name="txtValidSubject" Height="32" Margin="5" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Grid.Row="1" TextChanged="txtValidSubject_TextChanged"/>
+            <Button x:Name="btnView" Content="Search" Grid.Column="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Grid.Row="1" Click="btnView_Click"/>
+            <ListBox x:Name="listBox" Margin="0,5" Grid.Row="2" MinHeight="100" SelectionChanged="listBox_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="300"/>
+            <RadioButton x:Name="radioStudent" Content="Student" HorizontalAlignment="Right" Margin="195,9,0,0" VerticalAlignment="Top" GroupName="Person"/>
+        </Grid>
     </Grid>
 </Page>

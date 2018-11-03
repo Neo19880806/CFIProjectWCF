@@ -2,13 +2,11 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Windows.Storage.Streams;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.Web.Http;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -19,6 +17,8 @@ namespace CFIProjectUWP
     /// </summary>
     public sealed partial class CFIValidSubjectPage : Page
     {
+        private List<Subject> myResultList = new List<Subject>();
+        private ObservableCollection<Subject> validSubjectList = new ObservableCollection<Subject>();
         public CFIValidSubjectPage()
         {
             this.InitializeComponent();
@@ -28,48 +28,62 @@ namespace CFIProjectUWP
         {
             try
             {
-                //WCF Restful Http Local Url
-                HttpRequestMessage httpRequest = new HttpRequestMessage(
-                HttpMethod.Get, new Uri("http://localhost:1988/MywebHttpBinding/"));
-
-                HttpClient httpClient = new HttpClient();
-                HttpResponseMessage httpResponse = await httpClient.SendRequestAsync(httpRequest);
-
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                string subjectJson = await DAOHelper.GetValidSubject();
+                JArray jArray = JArray.Parse(subjectJson);
+                foreach (JObject obj in jArray)
                 {
-                    IHttpContent httpContent = httpResponse.Content;
-                    IInputStream stream = await httpContent.ReadAsInputStreamAsync();
-                    StreamReader reader = new StreamReader(stream.AsStreamForRead(), Encoding.UTF8);
-                    string subjectJson = reader.ReadToEnd();
-
-                    List<Subject> list = new List<Subject>();
-                    JArray jArray = JArray.Parse(subjectJson);
-                    foreach (JObject obj in jArray)
-                    {
-                        Subject subject = new Subject { Name = obj["Name"].ToString() };
-                        list.Add(subject);
-                    }
-
-                    list.ForEach(s => cmbValidSubject.Items.Add(s.Name));
-                    if (cmbValidSubject.Items.Count > 0)
-                    {
-                        cmbValidSubject.SelectedIndex = 0;
-                    }
+                    Subject subject = new Subject { Name = obj["Name"].ToString() };
+                    myResultList.Add(subject);
+                    validSubjectList.Add(subject);
                 }
-                else
+
+                myResultList.ForEach(s => cmbValidSubject.Items.Add(s.Name));
+                if (cmbValidSubject.Items.Count > 0)
                 {
-                    await new MessageDialog("HttpResponse Error:" + httpResponse.StatusCode).ShowAsync();
+                    cmbValidSubject.SelectedIndex = 0;
                 }
+
+                myResultList.ForEach(s => listBox.Items.Add(s.Name));
             }catch(Exception ex)
             {
-                await new MessageDialog("" + ex.ToString()).ShowAsync();
+                await new MessageDialog(ex.ToString()).ShowAsync();
+            }
+        }
+
+        private async void btnView_Click(object sender, RoutedEventArgs e)
+        {
+            string subject = txtValidSubject.Text.Trim();
+            var list = validSubjectList.Where(x => x.Name.Equals(subject));
+            if (list.Count() <= 0)
+            {
+                await new MessageDialog("Please input or select full name!").ShowAsync();
+            }
+            else
+            {
+                this.Frame.Navigate(typeof(CFIMainPage), subject);
             }
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbValidSubject.SelectedIndex == -1) { return; }
-            this.Frame.Navigate(typeof(CFIMainPage),cmbValidSubject.SelectedValue.ToString());
+            if (listBox.SelectedIndex == -1) { return; }
+            this.Frame.Navigate(typeof(CFIMainPage), txtValidSubject.ToString());
+        }
+
+        private void txtValidSubject_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            listBox.Items.Clear();
+            string filter = txtValidSubject.Text.Trim();
+            //We need refine this method,because it is not efficient
+            var list = validSubjectList.Where(x => x.Name.ToUpper().Contains(filter.ToUpper())).ToList();
+            list.ForEach(s => listBox.Items.Add(s.Name));
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBox.SelectedIndex!= -1){
+                txtValidSubject.Text = listBox.SelectedValue.ToString();
+            }
         }
     }
 }

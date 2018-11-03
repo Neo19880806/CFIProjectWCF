@@ -1,11 +1,8 @@
 ﻿using CFIWCFServiceLiabrary.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
-using System.Text;
 
 namespace CFIWCFServiceLiabrary
 {
@@ -16,8 +13,13 @@ namespace CFIWCFServiceLiabrary
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "/")]
+            UriTemplate = "/GetSubject")]
         List<Subject> GetValidSubject();
+
+        [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+    UriTemplate = "/GetASubject")]
+        Subject GetASubject();
 
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare,

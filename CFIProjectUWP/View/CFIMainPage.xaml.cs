@@ -4,16 +4,12 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Text;
-using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using Windows.Web.Http;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -43,66 +39,43 @@ namespace CFIProjectUWP
             {
                 String selectedSubject = e.Parameter.ToString();
                 Subject subject = new Subject { Name = selectedSubject };
-                JObject requestJsonObject = JObject.FromObject(subject);
+                string subjectJson = await DAOHelper.GetSubjectDetails(subject);
 
-                //WCF Restful Http Local Url
-                string url = "http://localhost:1988/MywebHttpBinding/Details?SubjectName=";
-                string jsonString = requestJsonObject.ToString();
-                String uriString = String.Format("{0}{1}", url, jsonString);
-                Uri uri = new Uri(uriString);
-                //httpRequest.Headers.Referer = uri;
-                //httpRequest.Method = HttpMethod.Get;
-                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, uri);
-
-
-                HttpClient httpClient = new HttpClient();
-                HttpResponseMessage httpResponse = await httpClient.SendRequestAsync(httpRequest);
-
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                mResultList.Clear();
+                JArray jArray = JArray.Parse(subjectJson);
+                foreach (JObject obj in jArray)
                 {
-                    IHttpContent httpContent = httpResponse.Content;
-                    IInputStream stream = await httpContent.ReadAsInputStreamAsync();
-                    StreamReader reader = new StreamReader(stream.AsStreamForRead(), Encoding.UTF8);
-                    string subjectJson = reader.ReadToEnd();
+                    SubjectDetail details = new SubjectDetail();
+                    details.CRN = obj["CRN"].ToString();
+                    details.SubjectCode = obj["SubjectCode"].ToString();
+                    details.CompetencyName = obj["CompetencyName"].ToString();
+                    DateTime StartDate = DateTime.Parse(obj["StartDate"].ToString());
+                    details.StartDate = String.Format("{0:MM/dd/yyyy}",StartDate);
+                    DateTime EndDate = DateTime.Parse(obj["EndDate"].ToString());
+                    details.EndDate = String.Format("{0:MM/dd/yyyy}", EndDate);
+                    details.DayOfWeek = obj["DayOfWeek"].ToString();
+                    details.Time = obj["Time"].ToString();
+                    details.Room = obj["Room"].ToString();
+                    details.Lecturer = obj["Lecturer"].ToString();
+                    details.Campus = obj["Campus"].ToString();
+                    mResultList.Add(details);
+                }
 
-                    mResultList.Clear();
-                    JArray jArray = JArray.Parse(subjectJson);
-                    foreach (JObject obj in jArray)
-                    {
-                        SubjectDetail details = new SubjectDetail();
-                        details.CRN = obj["CRN"].ToString();
-                        details.SubjectCode = obj["SubjectCode"].ToString();
-                        details.CompetencyName = obj["CompetencyName"].ToString();
-                        details.StartDate = obj["StartDate"].ToString();
-                        details.EndDate = obj["EndDate"].ToString();
-                        details.DayOfWeek = obj["DayOfWeek"].ToString();
-                        details.Time = obj["Time"].ToString();
-                        details.Room = obj["Room"].ToString();
-                        details.Lecturer = obj["Lecturer"].ToString();
-                        details.Campus = obj["Campus"].ToString();
-                        mResultList.Add(details);
-                    }
-
-                    if (mResultList.Count > 0)
-                    {
-                        btnFiltering.IsEnabled = true;
-                        btnSorting.IsEnabled = true;
-                    }
-                    else
-                    {
-                        btnFiltering.IsEnabled = false;
-                        btnSorting.IsEnabled = false;
-                    }
-                    RefreshListView(mResultList);
+                if (mResultList.Count > 0)
+                {
+                    btnFiltering.IsEnabled = true;
+                    btnSorting.IsEnabled = true;
                 }
                 else
                 {
-                    await new MessageDialog("HttpResponse Error:" + httpResponse.StatusCode).ShowAsync();
+                    btnFiltering.IsEnabled = false;
+                    btnSorting.IsEnabled = false;
                 }
+                RefreshListView(mResultList);
             }
             catch(Exception ex)
             {
-                await new MessageDialog("" + ex.ToString()).ShowAsync();
+                await new MessageDialog(ex.ToString()).ShowAsync();
             }
         }
 

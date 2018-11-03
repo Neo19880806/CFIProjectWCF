@@ -18,5 +18,14 @@ namespace CFIProjectUWP.Model
         public String Room { get; set; }
         public String Lecturer { get; set; }
         public String Campus { get; set; }
+
+        public String Prepare2Email()
+        {
+            string content = String.Format("CRN\t\t\t:\t{0}\n SubjectCode\t\t:\t{1}\n" +
+                "CompetencyName\t:\t{2}\nStartDate\t\t:\t{3}\nEndDate\t\t:\t{4}\nDayOfWeek\t\t:\t{5}" +
+                "\nTime\t\t\t:\t{6}\nRoom\t\t\t:\t{7}\nLecturer\t\t:\t{8}\nCampus\t\t\t:\t{9}",CRN,SubjectCode,
+                CompetencyName, StartDate,EndDate,DayOfWeek,Time,Room,Lecturer,Campus);
+           return content;
+        }
     }
 }

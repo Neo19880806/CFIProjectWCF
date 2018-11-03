@@ -90,12 +90,15 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
-    <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\DAOHelper.cs" />
+    <Compile Include="Model\EmailHelper.cs" />
+    <Compile Include="Model\HttpConnectionHelper.cs" />
+    <Compile Include="Model\PrinterHelper.cs" />
     <Compile Include="Model\Subject.cs" />
     <Compile Include="Model\SubjectDetail.cs" />
     <Compile Include="View\CFIDetailDialog.xaml.cs">

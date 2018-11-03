@@ -9,9 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFIConsoleHost", "CFIConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFIProjectUWP", "CFIProjectUWP\CFIProjectUWP.csproj", "{EB375B6C-6181-459C-91EA-534635DD7904}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CFIIIS6Host(1)", "CFIIIS6Host\", "{05D59BAE-7B5B-44A2-8904-9FE19E8B5AC4}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CFIIIS6Host", "CFIIIS6Host\", "{05D59BAE-7B5B-44A2-8904-9FE19E8B5AC4}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		ProjectReferences = "{e4c21a72-35f4-4771-8c1b-304545755ba9}|CFIWCFServiceLiabrary.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_14618"
 		Debug.AspNetCompiler.PhysicalPath = "CFIIIS6Host\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_14618\"
@@ -27,6 +28,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CFIIIS6Host(1)", "CFIIIS6Ho
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "14618"
+		SlnRelativePath = "CFIIIS6Host\"
 	EndProjectSection
 EndProject
 Global

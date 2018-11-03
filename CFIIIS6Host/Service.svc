@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost service ="CFIWCFServiceLiabrary.CFIDBService" %>
+﻿<%@ ServiceHost Language="C#" service ="CFIWCFServiceLiabrary.CFIDBService" %>
