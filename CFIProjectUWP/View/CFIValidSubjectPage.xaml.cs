@@ -1,4 +1,5 @@
 ﻿using CFIProjectUWP.Model;
+using CFIProjectUWP.Model.API;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -28,25 +29,20 @@ namespace CFIProjectUWP
         {
             try
             {
-                string subjectJson = await DAOHelper.GetValidSubject();
-                JArray jArray = JArray.Parse(subjectJson);
-                foreach (JObject obj in jArray)
-                {
-                    Subject subject = new Subject { Name = obj["Name"].ToString() };
-                    myResultList.Add(subject);
-                    validSubjectList.Add(subject);
-                }
+                ICFIApi api = new CFIApi();
+                myResultList = await api.getSubjects();
+                myResultList.ForEach(c => validSubjectList.Add(c));
 
                 myResultList.ForEach(s => cmbValidSubject.Items.Add(s.Name));
+                myResultList.ForEach(s => listBox.Items.Add(s.Name));
+
                 if (cmbValidSubject.Items.Count > 0)
                 {
                     cmbValidSubject.SelectedIndex = 0;
                 }
-
-                myResultList.ForEach(s => listBox.Items.Add(s.Name));
             }catch(Exception ex)
             {
-                await new MessageDialog(ex.ToString()).ShowAsync();
+                await new MessageDialog(ex.Message.ToString()).ShowAsync();
             }
         }
 

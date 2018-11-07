@@ -1,4 +1,5 @@
 ﻿using CFIProjectUWP.Model;
+using CFIProjectUWP.Model.API;
 using CFIProjectUWP.View;
 using Newtonsoft.Json.Linq;
 using System;
@@ -39,27 +40,9 @@ namespace CFIProjectUWP
             {
                 String selectedSubject = e.Parameter.ToString();
                 Subject subject = new Subject { Name = selectedSubject };
-                string subjectJson = await DAOHelper.GetSubjectDetails(subject);
 
-                mResultList.Clear();
-                JArray jArray = JArray.Parse(subjectJson);
-                foreach (JObject obj in jArray)
-                {
-                    SubjectDetail details = new SubjectDetail();
-                    details.CRN = obj["CRN"].ToString();
-                    details.SubjectCode = obj["SubjectCode"].ToString();
-                    details.CompetencyName = obj["CompetencyName"].ToString();
-                    DateTime StartDate = DateTime.Parse(obj["StartDate"].ToString());
-                    details.StartDate = String.Format("{0:MM/dd/yyyy}",StartDate);
-                    DateTime EndDate = DateTime.Parse(obj["EndDate"].ToString());
-                    details.EndDate = String.Format("{0:MM/dd/yyyy}", EndDate);
-                    details.DayOfWeek = obj["DayOfWeek"].ToString();
-                    details.Time = obj["Time"].ToString();
-                    details.Room = obj["Room"].ToString();
-                    details.Lecturer = obj["Lecturer"].ToString();
-                    details.Campus = obj["Campus"].ToString();
-                    mResultList.Add(details);
-                }
+                ICFIApi api = new CFIApi();
+                mResultList = await api.getSubjectDetails(subject);
 
                 if (mResultList.Count > 0)
                 {
@@ -75,7 +58,7 @@ namespace CFIProjectUWP
             }
             catch(Exception ex)
             {
-                await new MessageDialog(ex.ToString()).ShowAsync();
+                await new MessageDialog(ex.Message.ToString()).ShowAsync();
             }
         }
 

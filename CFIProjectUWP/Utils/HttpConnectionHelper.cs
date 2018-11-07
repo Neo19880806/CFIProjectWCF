@@ -29,7 +29,7 @@ namespace CFIProjectUWP.Model
                     throw new Exception("HttpResponse Error:" + httpResponse.StatusCode);
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw new Exception("Connect to http server failed");
             }

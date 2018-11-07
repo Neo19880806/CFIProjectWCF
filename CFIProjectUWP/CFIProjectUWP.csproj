@@ -95,10 +95,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DAOHelper.cs" />
-    <Compile Include="Model\EmailHelper.cs" />
-    <Compile Include="Model\HttpConnectionHelper.cs" />
-    <Compile Include="Model\PrinterHelper.cs" />
+    <Compile Include="API\CFIApi.cs" />
+    <Compile Include="Utils\DAOHelper.cs" />
+    <Compile Include="Utils\EmailHelper.cs" />
+    <Compile Include="Utils\HttpConnectionHelper.cs" />
+    <Compile Include="API\ICFIApi.cs" />
+    <Compile Include="Utils\PrinterHelper.cs" />
     <Compile Include="Model\Subject.cs" />
     <Compile Include="Model\SubjectDetail.cs" />
     <Compile Include="View\CFIDetailDialog.xaml.cs">
